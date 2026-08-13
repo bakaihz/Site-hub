@@ -1,0 +1,6 @@
+{
+  "name": "ShuziroAstral Hub",
+  "description": "Um hub centralizado com links úteis para tarefas, estudos e recursos educacionais.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
