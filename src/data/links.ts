@@ -7,7 +7,7 @@ export interface LinkItem {
   status?: string;
 }
 
-export const DISCORD_INVITE_URL = "https://discord.gg/uWx57PvtE";
+export const DISCORD_INVITE_URL = "https://discord.gg/8hR5cvmAS";
 
 export const links: LinkItem[] = [
   { id: "tarefassp", title: "Tarefas sp", link: DISCORD_INVITE_URL },
@@ -17,7 +17,7 @@ export const links: LinkItem[] = [
   { id: "profissional", title: "Educação profissional", link: DISCORD_INVITE_URL },
   { id: "saladofuturo", title: "Sala do futuro Hub", link: "https://bakai.shuziroastral.lol/" },
   { id: "apostilas", title: "Apostilas", link: "https://bakai.shuziroastral.lol/" },
-  { id: "avaliacaodiagnostico", title: "Avaliação diagnóstico", link: "https://nocterisastral-diagnostica-prov.vercel.app/" },
+  { id: "avaliacaodiagnostico", title: "Avaliação diagnóstico", link: "https://nocteris-diagnostica-astral.vercel.app/" },
   { id: "redacao", title: "Redação", link: DISCORD_INVITE_URL },
   { id: "alura", title: "Alura", link: DISCORD_INVITE_URL },
   { 

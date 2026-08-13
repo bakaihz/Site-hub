@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Card from "./components/Card";
 import { DiscordIcon } from "./components/DiscordIcon";
-import { Search, Sparkles, ShieldCheck } from "lucide-react";
+import { Search, Sparkles, ShieldCheck, X } from "lucide-react";
 
-export const DISCORD_INVITE_URL = "https://discord.gg/uWx57PvtE";
+export const DISCORD_INVITE_URL = "https://discord.gg/8hR5cvmAS";
 
 interface LinkItem {
   title: string;
@@ -11,6 +11,7 @@ interface LinkItem {
   description?: string;
   isDiscord?: boolean;
   status?: string;
+  onClick?: () => void;
 }
 
 const links: LinkItem[] = [
@@ -21,7 +22,7 @@ const links: LinkItem[] = [
   { title: "Educação profissional", link: DISCORD_INVITE_URL },
   { title: "Sala do futuro Hub", link: "https://bakai.shuziroastral.lol/" },
   { title: "Apostilas", link: "https://bakai.shuziroastral.lol/" },
-  { title: "Avaliação diagnóstico", link: "https://nocterisastral-diagnostica-prov.vercel.app/" },
+  { title: "Avaliação diagnóstico", link: "https://nocteris-diagnostica-astral.vercel.app/" },
   { title: "Redação", link: DISCORD_INVITE_URL },
   { title: "Alura", link: DISCORD_INVITE_URL, status: "Em desenvolvimento" },
   { 
@@ -34,6 +35,24 @@ const links: LinkItem[] = [
 
 export default function App() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [showDiagnosticModal, setShowDiagnosticModal] = useState(false);
+  const [countdown, setCountdown] = useState(5);
+
+  useEffect(() => {
+    if (!showDiagnosticModal) return;
+    if (countdown <= 0) return;
+
+    const timer = setInterval(() => {
+      setCountdown((prev) => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [showDiagnosticModal, countdown]);
+
+  const handleOpenDiagnosticModal = () => {
+    setCountdown(5);
+    setShowDiagnosticModal(true);
+  };
 
   const filteredLinks = links.filter((item) =>
     item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -83,6 +102,11 @@ export default function App() {
                 description={item.description}
                 isDiscord={item.isDiscord}
                 status={item.status}
+                onClick={
+                  item.title === "Avaliação diagnóstico" 
+                    ? handleOpenDiagnosticModal 
+                    : undefined
+                }
               />
             ))}
           </div>
@@ -95,6 +119,68 @@ export default function App() {
             >
               Limpar busca
             </button>
+          </div>
+        )}
+
+        {/* Modal for Avaliação diagnóstico notice */}
+        {showDiagnosticModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
+            <div className="relative w-full max-w-md bg-zinc-900 border border-zinc-800 rounded-3xl p-6 sm:p-8 shadow-2xl flex flex-col items-center text-center space-y-6">
+              {/* Top line highlight */}
+              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none rounded-t-3xl" />
+              
+              {/* Close button */}
+              <button 
+                onClick={() => setShowDiagnosticModal(false)}
+                className="absolute top-4 right-4 text-zinc-400 hover:text-white p-2 rounded-full hover:bg-zinc-800 transition-colors cursor-pointer"
+                aria-label="Fechar"
+              >
+                <X size={20} />
+              </button>
+
+              {/* Discord Icon / Badge */}
+              <div className="p-4 rounded-2xl bg-zinc-800 border border-zinc-700 text-white shadow-inner mt-2">
+                <DiscordIcon size={36} />
+              </div>
+
+              <div className="space-y-2">
+                <h3 className="text-xl font-bold text-white tracking-tight">Aviso Importante</h3>
+                <p className="text-zinc-300 text-sm leading-relaxed font-medium">
+                  Entre na nossa comunidade do Discord para receber atualizações sobre scripts e gabaritos
+                </p>
+              </div>
+
+              <div className="w-full space-y-3 pt-2">
+                <a 
+                  href={DISCORD_INVITE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-3 px-5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-semibold flex items-center justify-center gap-2.5 transition-colors text-sm border border-zinc-700 cursor-pointer"
+                >
+                  <DiscordIcon size={18} />
+                  Entrar no Discord
+                </a>
+
+                {countdown > 0 ? (
+                  <button
+                    disabled
+                    className="w-full py-3.5 px-6 rounded-xl bg-zinc-800 text-zinc-400 font-bold text-center text-sm border border-zinc-700/60 cursor-not-allowed flex items-center justify-center gap-2 select-none opacity-80"
+                  >
+                    Aguarde {countdown}s para entrar...
+                  </button>
+                ) : (
+                  <a 
+                    href="https://nocteris-diagnostica-astral.vercel.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setShowDiagnosticModal(false)}
+                    className="w-full py-3.5 px-6 rounded-xl bg-white hover:bg-zinc-200 text-black font-bold text-center transition-all text-sm shadow-lg flex items-center justify-center gap-2 cursor-pointer animate-in fade-in duration-300"
+                  >
+                    Entrar
+                  </a>
+                )}
+              </div>
+            </div>
           </div>
         )}
 

@@ -9,9 +9,17 @@ interface CardProps {
   description?: string;
   isDiscord?: boolean;
   status?: string;
+  onClick?: () => void;
 }
 
-const Card: React.FC<CardProps> = ({ title, link, description, isDiscord, status }) => {
+const Card: React.FC<CardProps> = ({ title, link, description, isDiscord, status, onClick }) => {
+  const handleClick = (e: React.MouseEvent) => {
+    if (onClick) {
+      e.preventDefault();
+      onClick();
+    }
+  };
+
   return (
     <motion.div
       whileHover={{ y: -4 }}
@@ -20,8 +28,9 @@ const Card: React.FC<CardProps> = ({ title, link, description, isDiscord, status
         group relative overflow-hidden p-6 rounded-2xl backdrop-blur-xl transition-all duration-300
         border border-zinc-800/80 bg-zinc-900/40 hover:bg-zinc-900/80
         hover:border-zinc-600 shadow-[0_4px_20px_rgba(0,0,0,0.4)]
-        hover:shadow-[0_8px_30px_rgba(255,255,255,0.06)] flex flex-col justify-between h-full
+        hover:shadow-[0_8px_30px_rgba(255,255,255,0.06)] flex flex-col justify-between h-full cursor-pointer
       `}
+      onClick={handleClick}
     >
       {/* Top subtle highlight line */}
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent pointer-events-none" />
@@ -57,10 +66,16 @@ const Card: React.FC<CardProps> = ({ title, link, description, isDiscord, status
         </div>
       </div>
       
-      {/* Make entire card clickable to Discord link */}
-      <a href={link} target="_blank" rel="noopener noreferrer" className="absolute inset-0 z-20">
-        <span className="sr-only">Acessar {title}</span>
-      </a>
+      {/* Make entire card clickable */}
+      {!onClick ? (
+        <a href={link} target="_blank" rel="noopener noreferrer" className="absolute inset-0 z-20">
+          <span className="sr-only">Acessar {title}</span>
+        </a>
+      ) : (
+        <button type="button" onClick={handleClick} className="absolute inset-0 z-20 w-full h-full opacity-0 cursor-pointer">
+          <span className="sr-only">Acessar {title}</span>
+        </button>
+      )}
     </motion.div>
   );
 };
