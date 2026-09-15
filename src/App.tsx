@@ -3,7 +3,7 @@ import Card from "./components/Card";
 import { DiscordIcon } from "./components/DiscordIcon";
 import { Search, Sparkles, ShieldCheck, X } from "lucide-react";
 
-export const DISCORD_INVITE_URL = "https://discord.gg/j9S6yyf2N";
+export const DISCORD_INVITE_URL = "https://discord.gg/Dy6KDv4HK";
 
 interface LinkItem {
   title: string;
