@@ -7,7 +7,7 @@ export interface LinkItem {
   status?: string;
 }
 
-export const DISCORD_INVITE_URL = "https://discord.gg/Dy6KDv4HK";
+export const DISCORD_INVITE_URL = "https://discord.gg/shuziroastral";
 
 export const links: LinkItem[] = [
   { id: "tarefassp", title: "Tarefas sp", link: DISCORD_INVITE_URL },
